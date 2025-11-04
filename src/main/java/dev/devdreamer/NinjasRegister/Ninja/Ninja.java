@@ -17,6 +17,7 @@ public class Ninja {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
+    @Column(unique = true)
     private String email;
     private int age;
     //Um ninja pode ter apenas uma missão(muitos ninjas vai ter uma missão)
