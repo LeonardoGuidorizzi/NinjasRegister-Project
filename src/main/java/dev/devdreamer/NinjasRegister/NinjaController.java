@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController //eu mapeio pra esse arquivo para ser um controller
 @RequestMapping // dizendo que esse arquivo é o mapa de todas as rotas
-public class Controller {
-    @GetMapping("/helloWorld")
+public class NinjaController {
+    @GetMapping("/helloWorld") //rota
     public String helloWord(){
         return "Hello World";
     }
