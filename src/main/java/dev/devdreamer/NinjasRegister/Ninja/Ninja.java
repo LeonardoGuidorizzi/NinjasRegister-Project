@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -15,11 +15,16 @@ import java.util.List;
 public class Ninja {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
-    private String nome;
+    @Column(name ="name")
+    private String name;
+    @Column(name = "age")
+    private int age;
     @Column(unique = true)
     private String email;
-    private int age;
+    @Column(name = "img_url")
+    private String imgUrl;
     //Um ninja pode ter apenas uma missão(muitos ninjas vai ter uma missão)
     @ManyToOne
     @JoinColumn(name = "mission_id")
