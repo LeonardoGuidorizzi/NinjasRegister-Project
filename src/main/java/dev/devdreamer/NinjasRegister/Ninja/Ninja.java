@@ -21,6 +21,8 @@ public class Ninja {
     private String name;
     @Column(name = "age")
     private int age;
+    @Column(name = "rank")
+    private String rank;
     @Column(unique = true)
     private String email;
     @Column(name = "img_url")
