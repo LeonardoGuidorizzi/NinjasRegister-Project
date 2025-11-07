@@ -1,5 +1,6 @@
 package dev.devdreamer.NinjasRegister.Mission;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.devdreamer.NinjasRegister.Ninja.Ninja;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -25,5 +26,6 @@ public class Mission {
     private String level;
     //uma missão pode ter varios ninjas(uma missão vai ter varios ninjas)
     @OneToMany(mappedBy = "mission")
+    @JsonIgnore// isso para o loop de serialização
     private List<Ninja> ninjas;
 }
