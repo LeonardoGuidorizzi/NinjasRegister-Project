@@ -32,8 +32,8 @@ public class NinjaController {
     public String delete() {
         return "deleteNinja";
     }
-    @GetMapping()
-    public String allById(){
-        return  "allById";
-    }
+    @GetMapping("{id}")
+    public Ninja findById(@PathVariable Long id){
+        return  ninjaService.findById(id);
+    }//a variavel que eu passei no paramentro vai fazer parte da rota através do PathVariable
 }
