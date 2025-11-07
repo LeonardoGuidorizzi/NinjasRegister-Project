@@ -1,20 +1,27 @@
 package dev.devdreamer.NinjasRegister.Ninja;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController //eu mapeio pra esse arquivo para ser um controller
 @RequestMapping("api/ninja") // dizendo que esse arquivo é o mapa de todas as rotas
 public class NinjaController {
+    private NinjaService ninjaService;
 
+    public NinjaController(NinjaService ninjaService) {
+        this.ninjaService = ninjaService;
+    }
 
     @PostMapping()
     public String create(){
         return "createNinja";
     }
 
-    @GetMapping("/helloWorld") //rota
-    public String helloWord(){
-        return "Hello World";
+    @GetMapping("/getAll") //rota
+    public List<Ninja> getAll(){
+        return ninjaService.getAll();
     }
 
     @PutMapping
@@ -22,7 +29,7 @@ public class NinjaController {
         return "updateNinja";
     }
     @DeleteMapping
-    public String deleteById() {
+    public String delete() {
         return "deleteNinja";
     }
     @GetMapping()
