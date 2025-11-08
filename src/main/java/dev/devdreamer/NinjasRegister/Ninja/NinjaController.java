@@ -1,6 +1,5 @@
 package dev.devdreamer.NinjasRegister.Ninja;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,25 +14,17 @@ public class NinjaController {
     }
 
     @PostMapping
-    public Ninja create(@RequestBody Ninja ninja){
-        return ninjaService.create(ninja);
-    }
-
+    public Ninja create(@RequestBody Ninja ninja){return ninjaService.create(ninja);}
     @GetMapping() //rota
     public List<Ninja> getAll(){
         return ninjaService.getAll();
     }
-
     @PutMapping
     public String update(){
         return "updateNinja";
     }
-    @DeleteMapping
-    public String delete() {
-        return "deleteNinja";
-    }
+    @DeleteMapping("/{id}")
+    public void deleteByid(Long id) {ninjaService.deleteById(id);}
     @GetMapping("/{id}")
-    public Ninja findById(@PathVariable Long id){
-        return  ninjaService.findById(id);
-    }//a variavel que eu passei no paramentro vai fazer parte da rota através do PathVariable
+    public Ninja findById(@PathVariable Long id){return  ninjaService.findById(id);}//a variavel que eu passei no paramentro vai fazer parte da rota através do PathVariable
 }

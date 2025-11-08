@@ -1,6 +1,5 @@
 package dev.devdreamer.NinjasRegister.Ninja;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +26,10 @@ public class NinjaService {
     //create ninja
     public Ninja create(Ninja ninja){
         return ninjaRepository.save(ninja);
+    }
+
+    public void deleteById(Long id){
+        ninjaRepository.deleteById(id);
     }
 
 }
