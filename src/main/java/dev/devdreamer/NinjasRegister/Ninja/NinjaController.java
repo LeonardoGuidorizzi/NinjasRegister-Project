@@ -14,12 +14,12 @@ public class NinjaController {
         this.ninjaService = ninjaService;
     }
 
-    @PostMapping()
-    public String create(){
-        return "createNinja";
+    @PostMapping
+    public Ninja create(@RequestBody Ninja ninja){
+        return ninjaService.create(ninja);
     }
 
-    @GetMapping("/getAll") //rota
+    @GetMapping() //rota
     public List<Ninja> getAll(){
         return ninjaService.getAll();
     }
@@ -32,7 +32,7 @@ public class NinjaController {
     public String delete() {
         return "deleteNinja";
     }
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public Ninja findById(@PathVariable Long id){
         return  ninjaService.findById(id);
     }//a variavel que eu passei no paramentro vai fazer parte da rota através do PathVariable
