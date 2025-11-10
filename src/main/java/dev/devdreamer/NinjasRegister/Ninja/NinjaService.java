@@ -13,6 +13,10 @@ public class NinjaService {
     public NinjaService(NinjaRepository ninjaRepository){
         this.ninjaRepository = ninjaRepository;
     }
+    //create ninja
+    public Ninja create(Ninja ninja){
+        return ninjaRepository.save(ninja);
+    }
 
     //list all ninjas
     public List<Ninja> getAll (){
@@ -23,10 +27,15 @@ public class NinjaService {
         Optional<Ninja> ninja = ninjaRepository.findById(id); //Optional porque o ninja pode n existir
         return ninja.orElse(null);
     }
-    //create ninja
-    public Ninja create(Ninja ninja){
-        return ninjaRepository.save(ninja);
+
+    public Ninja update(Long id, Ninja ninja){
+        if (ninjaRepository.existsById(id)){
+            ninja.setId(id);
+            return ninjaRepository.save(ninja);
+        }
+        return null;
     }
+
 
     public void deleteById(Long id){
         ninjaRepository.deleteById(id);
