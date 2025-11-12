@@ -1,5 +1,7 @@
 package dev.devdreamer.NinjasRegister.Ninja;
 
+import dev.devdreamer.NinjasRegister.Ninja.dto.NinjaDTO;
+import dev.devdreamer.NinjasRegister.Ninja.mapper.NinjaMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,13 +11,19 @@ import java.util.Optional;
 public class NinjaService {
 
     private NinjaRepository ninjaRepository;
+    private NinjaMapper ninjaMapper;
 
-    public NinjaService(NinjaRepository ninjaRepository){
+    public NinjaService(NinjaRepository ninjaRepository, NinjaMapper ninjaMapper) {
         this.ninjaRepository = ninjaRepository;
+        this.ninjaMapper = ninjaMapper;
     }
+
     //create ninja
-    public Ninja create(Ninja ninja){
-        return ninjaRepository.save(ninja);
+    public NinjaDTO create(NinjaDTO ninjaDTO){
+        Ninja ninja = new NinjaMapper().map(ninjaDTO);
+        ninja  = ninjaRepository.save(ninja);
+        return ninjaMapper.map(ninja); // aqui ele transforma em um dto novamente
+
     }
 
     //list all ninjas

@@ -1,5 +1,6 @@
 package dev.devdreamer.NinjasRegister.Ninja;
 
+import dev.devdreamer.NinjasRegister.Ninja.dto.NinjaDTO;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public class NinjaController {
     }
 
     @PostMapping
-    public Ninja create(@RequestBody Ninja ninja){return ninjaService.create(ninja);}
+    public NinjaDTO create(@RequestBody NinjaDTO ninja){return ninjaService.create(ninja);}
     @GetMapping() //rota
     public List<Ninja> getAll(){
         return ninjaService.getAll();
