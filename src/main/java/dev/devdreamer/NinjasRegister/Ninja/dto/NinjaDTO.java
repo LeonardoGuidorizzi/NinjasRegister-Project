@@ -15,6 +15,6 @@ public class NinjaDTO{
     private String rank;
     private String email;
     private String imgUrl;
-    private Mission mission;
+    private Long missionId;
 
 }

@@ -20,8 +20,10 @@ public class NinjaController {
     public List<NinjaDTO> getAll(){
         return ninjaService.getAll();
     }
+    @PatchMapping("/{id}")
+    public NinjaDTO partilUpdate(@PathVariable Long id, @RequestBody NinjaDTO ninja){return ninjaService.partialUpdate(id, ninja);}
     @PutMapping("/{id}")
-    public NinjaDTO update(@PathVariable Long id, @RequestBody NinjaDTO ninja){return ninjaService.update(id, ninja);}
+    public NinjaDTO update(@PathVariable Long id, @RequestBody NinjaDTO ninja){return ninjaService.update(id, ninja);};
     @DeleteMapping("/{id}")
     public void deleteByid(@PathVariable Long id) {ninjaService.deleteById(id);}
     @GetMapping("/{id}")
