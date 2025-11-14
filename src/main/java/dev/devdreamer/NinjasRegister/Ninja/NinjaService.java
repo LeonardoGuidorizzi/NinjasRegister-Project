@@ -2,6 +2,8 @@ package dev.devdreamer.NinjasRegister.Ninja;
 
 import dev.devdreamer.NinjasRegister.Mission.Mission;
 import dev.devdreamer.NinjasRegister.Mission.MissionService;
+import dev.devdreamer.NinjasRegister.Mission.dto.MissionDTO;
+import dev.devdreamer.NinjasRegister.Mission.mapper.MissionMapper;
 import dev.devdreamer.NinjasRegister.Ninja.dto.NinjaDTO;
 import dev.devdreamer.NinjasRegister.Ninja.mapper.NinjaMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,18 +18,21 @@ public class NinjaService {
     private NinjaRepository ninjaRepository;
     private NinjaMapper ninjaMapper;
     private MissionService missionService;
+    private MissionMapper missionMapper;
 
-    public NinjaService(NinjaRepository ninjaRepository, NinjaMapper ninjaMapper, MissionService missionService) {
+    public NinjaService(NinjaRepository ninjaRepository, NinjaMapper ninjaMapper, MissionService missionService, MissionMapper missionMapper) {
         this.ninjaRepository = ninjaRepository;
         this.ninjaMapper = ninjaMapper;
         this.missionService = missionService;
+        this.missionMapper = missionMapper;
     }
 
     //create ninja
     public NinjaDTO create(NinjaDTO ninjaDTO){
         Ninja ninja = new NinjaMapper().map(ninjaDTO);//ele tranforma um dto em um entity
 
-            Mission mission = missionService.findById(ninjaDTO.getMissionId());
+            MissionDTO missionDTO = missionService.findById(ninjaDTO.getMissionId());
+            Mission mission  = missionMapper.map(missionDTO);
             ninja.setMission(mission);//ele coloca a missão encontrada na missão relacionada com o ninja
 
         ninja  = ninjaRepository.save(ninja);// insere o entity
