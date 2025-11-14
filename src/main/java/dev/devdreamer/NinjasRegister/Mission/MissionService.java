@@ -16,6 +16,12 @@ public class MissionService {
         this.missionMapper = missionMapper;
     }
 
+    public MissionDTO create(MissionDTO missionDTO){
+        Mission mission = missionMapper.map(missionDTO);
+        mission  = missionRepository.save(mission);
+        return missionMapper.map(mission);
+    }
+
     public List<MissionDTO> getAll (){
         List<Mission> missions = missionRepository.findAll();
         return missions.stream()
@@ -26,6 +32,9 @@ public class MissionService {
     public MissionDTO findById (Long id){
         Optional<Mission> mission = missionRepository.findById(id);
         return mission.map(missionMapper::map).orElseThrow(()-> new RuntimeException("Missao não encontrada"));
+    }
 
+    public void deleteById(Long id){
+        missionRepository.deleteById(id);
     }
 }

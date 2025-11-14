@@ -16,8 +16,8 @@ public class MissionController {
     }
 
     @PostMapping()
-    public String create(){
-        return "createNinja";
+    public MissionDTO create(@RequestBody MissionDTO missionDTO){
+        return missionService.create(missionDTO);
     }
 
     @GetMapping() //rota
@@ -29,9 +29,9 @@ public class MissionController {
     public String update(){
         return "updateNinja";
     }
-    @DeleteMapping
-    public String deleteById() {
-        return "deleteNinja";
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable Long id ) {
+        missionService.deleteById(id);
     }
 
 }
