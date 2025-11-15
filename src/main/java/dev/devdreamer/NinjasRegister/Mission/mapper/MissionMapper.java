@@ -21,4 +21,9 @@ public class MissionMapper {
         return missionDTO;
     }
 
+    public void updateEntityFromDTO(MissionDTO dto, Mission entity){
+        if(dto.getName() != null)entity.setName(dto.getName());
+        if(dto.getLevel() != null)entity.setLevel(dto.getLevel());
+    }
+
 }

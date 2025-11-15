@@ -25,9 +25,14 @@ public class MissionController {
         return missionService.getAll();
     }
 
-    @PutMapping
-    public String update(){
-        return "updateNinja";
+    @PutMapping("/{id}")
+    public MissionDTO update( @PathVariable Long id, @RequestBody MissionDTO missionDTO){
+        return missionService.update(missionDTO, id);
+    }
+
+    @PatchMapping("/{id}")
+    public MissionDTO partialUpdate(@PathVariable Long id, @RequestBody MissionDTO missionDTO){
+        return missionService.partialUpdate(missionDTO, id);
     }
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id ) {
