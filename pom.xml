@@ -80,18 +80,6 @@
 				<groupId>org.flywaydb</groupId>
 				<artifactId>flyway-maven-plugin</artifactId>
 				<version>10.20.1</version>
-				<configuration>
-					<!--suppress UnresolvedMavenProperty -->
-					<url>jdbc:h2:file:./data/NinjasRegisterDb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE</url>
-					<!--suppress UnresolvedMavenProperty -->
-					<user>devdreamer</user>
-					<!--suppress UnresolvedMavenProperty -->
-					<password>123</password>
-					<locations>
-						<location>filesystem:src/main/resources/db/migrations</location>
-					</locations>
-					<cleanDisabled>false</cleanDisabled>
-				</configuration>
 			</plugin>
 		</plugins>
 
