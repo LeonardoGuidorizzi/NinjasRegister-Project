@@ -16,13 +16,12 @@ public class NinjaService {
     private NinjaRepository ninjaRepository;
     private NinjaMapper ninjaMapper;
     private MissionService missionService;
-    private MissionMapper missionMapper;
 
-    public NinjaService(NinjaRepository ninjaRepository, NinjaMapper ninjaMapper, MissionService missionService, MissionMapper missionMapper) {
+
+    public NinjaService(NinjaRepository ninjaRepository, NinjaMapper ninjaMapper, MissionService missionService) {
         this.ninjaRepository = ninjaRepository;
         this.ninjaMapper = ninjaMapper;
         this.missionService = missionService;
-        this.missionMapper = missionMapper;
     }
 
     //create ninja
