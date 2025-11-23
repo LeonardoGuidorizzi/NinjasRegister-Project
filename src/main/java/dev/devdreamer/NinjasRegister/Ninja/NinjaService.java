@@ -2,7 +2,7 @@ package dev.devdreamer.NinjasRegister.Ninja;
 
 import dev.devdreamer.NinjasRegister.Mission.Mission;
 import dev.devdreamer.NinjasRegister.Mission.MissionService;
-import dev.devdreamer.NinjasRegister.Mission.dto.MissionDTO;
+import dev.devdreamer.NinjasRegister.Mission.dto.MissionResponseDTO;
 import dev.devdreamer.NinjasRegister.Mission.mapper.MissionMapper;
 import dev.devdreamer.NinjasRegister.Ninja.dto.NinjaDTO;
 import dev.devdreamer.NinjasRegister.Ninja.mapper.NinjaMapper;
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class NinjaService {
@@ -30,9 +29,9 @@ public class NinjaService {
     public NinjaDTO create(NinjaDTO ninjaDTO){
         Ninja ninja = new NinjaMapper().map(ninjaDTO);//ele tranforma um dto em um entity
 
-            MissionDTO missionDTO = missionService.findById(ninjaDTO.getMissionId());
-            Mission mission = missionMapper.map(missionDTO);
-            ninja.setMission(mission);//ele coloca a missão encontrada na missão relacionada com o ninja
+
+        Mission mission = missionService.findById(ninjaDTO.getMissionId());
+        ninja.setMission(mission);//ele coloca a missão encontrada na missão relacionada com o ninja
 
         ninja  = ninjaRepository.save(ninja);// insere o entity
         return ninjaMapper.map(ninja); // aqui ele transforma em um dto novamente
