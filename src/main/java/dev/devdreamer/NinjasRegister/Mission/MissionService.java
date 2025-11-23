@@ -1,8 +1,7 @@
 package dev.devdreamer.NinjasRegister.Mission;
 
-import dev.devdreamer.NinjasRegister.Mission.dto.MissionDTO;
+import dev.devdreamer.NinjasRegister.Mission.dto.*;
 import dev.devdreamer.NinjasRegister.Mission.mapper.MissionMapper;
-import dev.devdreamer.NinjasRegister.Ninja.mapper.NinjaMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,40 +16,38 @@ public class MissionService {
         this.missionMapper = missionMapper;
     }
 
-    public MissionDTO create(MissionDTO missionDTO){
-        Mission mission = missionMapper.map(missionDTO);
+    public MissionResponseDTO create(MissionCreateDTO missionCreateDTO){
+        Mission mission = missionMapper.toEntity(missionCreateDTO);
         mission  = missionRepository.save(mission);
-        return missionMapper.map(mission);
+        return missionMapper.toDto(mission);
     }
 
-    public List<MissionDTO> getAll (){
+    public List<MissionResponseDTO> getAll (){
         List<Mission> missions = missionRepository.findAll();
         return missions.stream()
-                .map(missionMapper::map)
+                .map(missionMapper::toDto)
                 .toList();
     }
 
-    public MissionDTO findById (Long id){
-        Optional<Mission> mission = missionRepository.findById(id);
-        return mission.map(missionMapper::map)
-                .orElseThrow(()-> new RuntimeException("Missao não encontrada"));
+    public Mission findById (Long id){
+        return missionRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Mission not found"));
     }
 
-    public MissionDTO update(MissionDTO missionDTO, Long id){
+    public MissionResponseDTO update(MissionUpdateDTO missionDTO, Long id){
         Mission foundMission = missionRepository.findById(id)
                 .orElseThrow(()-> new RuntimeException("Missão não encontrada") );
-        foundMission.setName(missionDTO.getName());
-        foundMission.setLevel(missionDTO.getLevel());
-        Mission mission = missionRepository.save(foundMission);
-        return missionMapper.map(mission);
+        missionMapper.updatePut(missionDTO, foundMission);
+        missionRepository.save(foundMission);
+        return missionMapper.toDto(foundMission);
     }
 
-    public MissionDTO partialUpdate(MissionDTO missionDTO, Long id){
+    public MissionResponseDTO partialUpdate(MissionPatchDTO missionDTO, Long id){
         Mission foundMission = missionRepository.findById(id)
                 .orElseThrow(()-> new RuntimeException("Missão não encontrada"));
-        missionMapper.updateEntityFromDTO(missionDTO, foundMission);
-        Mission mission = missionRepository.save(foundMission);
-        return missionMapper.map(mission);
+        missionMapper.updatePatch(missionDTO, foundMission);
+        missionRepository.save(foundMission);
+        return missionMapper.toDto(foundMission);
     }
 
 
