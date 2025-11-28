@@ -1,8 +1,7 @@
 package dev.devdreamer.NinjasRegister.Ninja.mapper;
-
-import dev.devdreamer.NinjasRegister.Mission.Mission;
 import dev.devdreamer.NinjasRegister.Ninja.Ninja;
 import dev.devdreamer.NinjasRegister.Ninja.dto.NinjaCreateDTO;
+import dev.devdreamer.NinjasRegister.Ninja.dto.NinjaPatchDTO;
 import dev.devdreamer.NinjasRegister.Ninja.dto.NinjaResponseDTO;
 import dev.devdreamer.NinjasRegister.Ninja.dto.NinjaUpdateDTO;
 import org.mapstruct.*;
@@ -12,21 +11,19 @@ import org.springframework.stereotype.Component;
 @Mapper(componentModel = "spring")
 public interface NinjaMapper {
     // CREATE DTO → ENTITY
-    @Mapping(target = "id", ignore = true)
     Ninja toEntity (NinjaCreateDTO dto);
 
     // CREATE ENTITY → DTO
+    @Mapping(source = "mission.id", target = "missionId")
     NinjaResponseDTO toDto (Ninja entity);
 
     // UPDATE DTO → ENTITY (PUT)
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL)
-    @Mapping(target = "id", ignore = true)
     void updatePut(NinjaUpdateDTO dto, @MappingTarget Ninja entity);
 
     // UPDATE DTO → ENTITY (PATCH)
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "id", ignore = true)
-    void updatePatch(NinjaUpdateDTO dto, @MappingTarget Ninja entity);
+    void updatePatch(NinjaPatchDTO dto, @MappingTarget Ninja entity);
 
 
 }
