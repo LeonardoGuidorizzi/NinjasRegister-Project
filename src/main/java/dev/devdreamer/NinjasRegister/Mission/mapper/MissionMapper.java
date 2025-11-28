@@ -12,6 +12,10 @@ public interface MissionMapper {
     @Mapping(target = "ninjas", ignore = true)
     Mission toEntity(MissionCreateDTO dto);
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "ninjas", ignore = true)
+    Mission toEntity(MissionResponseDTO dto);
+
     // ENTITY → RESPONSE DTO
     MissionResponseDTO toDto(Mission mission);
 
