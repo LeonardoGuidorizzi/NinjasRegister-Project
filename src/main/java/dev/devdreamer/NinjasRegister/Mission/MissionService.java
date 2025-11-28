@@ -29,7 +29,7 @@ public class MissionService {
                 .toList();
     }
 
-    public MissionResponseDTO findEntityById(Long id){
+    public MissionResponseDTO findById(Long id){
         return missionMapper.toDto(
                 missionRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Mission not found"))
