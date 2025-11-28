@@ -1,6 +1,7 @@
 package dev.devdreamer.NinjasRegister.Ninja.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public record NinjaUpdateDTO(
         @NotBlank(message = "O nome do ninja é obrigadorio" )
@@ -13,7 +14,7 @@ public record NinjaUpdateDTO(
         String email,
         @NotBlank(message = "A imgUrl é obrigadorio" )
         String imgUrl,
-        @NotBlank(message = "O Id da missão é obrigadorio" )
+        @NotNull(message = "O Id da missão é obrigadorio" )
         Long missionId
 ) {
 }
