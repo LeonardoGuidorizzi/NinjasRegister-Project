@@ -1,10 +1,11 @@
 package dev.devdreamer.NinjasRegister.Ninja;
 
 import dev.devdreamer.NinjasRegister.Mission.Mission;
-import dev.devdreamer.NinjasRegister.Mission.MissionService;
-import dev.devdreamer.NinjasRegister.Mission.dto.MissionResponseDTO;
-import dev.devdreamer.NinjasRegister.Mission.mapper.MissionMapper;
-import dev.devdreamer.NinjasRegister.Ninja.dto.NinjaDTO;
+import dev.devdreamer.NinjasRegister.Mission.MissionRepository;
+import dev.devdreamer.NinjasRegister.Ninja.dto.NinjaCreateDTO;
+import dev.devdreamer.NinjasRegister.Ninja.dto.NinjaPatchDTO;
+import dev.devdreamer.NinjasRegister.Ninja.dto.NinjaResponseDTO;
+import dev.devdreamer.NinjasRegister.Ninja.dto.NinjaUpdateDTO;
 import dev.devdreamer.NinjasRegister.Ninja.mapper.NinjaMapper;
 import org.springframework.stereotype.Service;
 
@@ -14,62 +15,62 @@ import java.util.Optional;
 @Service
 public class NinjaService {
     private NinjaRepository ninjaRepository;
+    MissionRepository missionRepository;
     private NinjaMapper ninjaMapper;
-    private MissionService missionService;
 
 
-    public NinjaService(NinjaRepository ninjaRepository, NinjaMapper ninjaMapper, MissionService missionService) {
+
+
+    public NinjaService(NinjaRepository ninjaRepository, NinjaMapper ninjaMapper, MissionRepository missionRepository) {
         this.ninjaRepository = ninjaRepository;
         this.ninjaMapper = ninjaMapper;
-        this.missionService = missionService;
+        this.missionRepository = missionRepository;
+
     }
 
     //create ninja
-    public NinjaDTO create(NinjaDTO ninjaDTO){
-        Ninja ninja = new NinjaMapper().map(ninjaDTO);//ele tranforma um dto em um entity
+    public NinjaResponseDTO create(NinjaCreateDTO ninjaDTO){
+        Ninja ninja = ninjaMapper.toEntity(ninjaDTO);//ele tranforma um dto em um entity
 
 
-        Mission mission = missionService.findById(ninjaDTO.getMissionId());
+        Mission mission = missionRepository.findById(ninjaDTO.missionId())
+                .orElseThrow(() -> new RuntimeException("Missão não encontrada"));;
         ninja.setMission(mission);//ele coloca a missão encontrada na missão relacionada com o ninja
 
         ninja  = ninjaRepository.save(ninja);// insere o entity
-        return ninjaMapper.map(ninja); // aqui ele transforma em um dto novamente
+        return ninjaMapper.toDto(ninja); // aqui ele transforma em um dto novamente
     }
 
     //list all ninjas
-    public List<NinjaDTO> getAll (){
+    public List<NinjaResponseDTO> getAll (){
 
         List<Ninja> ninjas = ninjaRepository.findAll();
         return ninjas.stream()
-                .map(ninjaMapper::map)//.map() aplica função no valor, se existir
+                .map(ninjaMapper::toDto)//.map() aplica função no valor, se existir
                 .toList();//agora que todos foram processados me devolva uma lista
     }
     //find ninja by id
-    public NinjaDTO findById(Long id){
+    public NinjaResponseDTO findById(Long id){
         Optional<Ninja> ninja = ninjaRepository.findById(id); //Optional porque o ninja pode n existir
-        return ninja.map(ninjaMapper::map).orElseThrow(()-> new RuntimeException("Ninja não encontrado"));
+        return ninja.map(ninjaMapper::toDto).orElseThrow(()-> new RuntimeException("Ninja não encontrado"));
     }
 
-    public NinjaDTO update(Long id, NinjaDTO ninjaDTO){
+    public NinjaResponseDTO update(Long id, NinjaUpdateDTO ninjaDTO){
         Ninja foundNinja = ninjaRepository.findById(id)
                 .orElseThrow(()-> new RuntimeException("Ninja não encontrado"));
-        foundNinja.setName(ninjaDTO.getName());
-        foundNinja.setAge(ninjaDTO.getAge());
-        foundNinja.setRank(ninjaDTO.getRank());
-        foundNinja.setEmail(ninjaDTO.getEmail());
-        foundNinja.setImgUrl(ninjaDTO.getImgUrl());
+        ninjaMapper.updatePut(ninjaDTO, foundNinja);
         Ninja ninja = ninjaRepository.save(foundNinja);
-        return ninjaMapper.map(ninja);
+        return ninjaMapper.toDto(ninja);
 
     }
 
-    public NinjaDTO partialUpdate(Long id, NinjaDTO ninjaDTO){
+    public NinjaResponseDTO partialUpdate(Long id, NinjaPatchDTO ninjaDTO){
         Ninja foundNinja = ninjaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Ninja não encontrado") );
         // Atualiza os campos do ninja que já existe
-       ninjaMapper.updateEntityFromDTO(ninjaDTO, foundNinja);
+        ninjaMapper.updatePatch(ninjaDTO, foundNinja);
         Ninja ninja = ninjaRepository.save(foundNinja);
-        return ninjaMapper.map(ninja);//tranforma em Ninja DTO
+        return ninjaMapper.toDto(ninja);//tranforma em Ninja DTO
     }
 
 
