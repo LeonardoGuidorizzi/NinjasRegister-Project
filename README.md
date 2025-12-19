@@ -29,7 +29,8 @@ Console do h2:
     http://localhost:8080/h2-console
 
 No console do **H2** vai vai aparecer algo assim:
-![img.png](img.png)
+<img width="453" height="352" alt="image" src="https://github.com/user-attachments/assets/91208fa9-a2ea-4109-a89e-a182de8f3a73" />
+
 
 Na raiz do projeto crie uma pasta chamada "data":
 
